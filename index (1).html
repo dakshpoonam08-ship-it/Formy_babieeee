@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You ❤️</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color: transparent; /* FIX: removes blue flash */
+}
+
+body{
+    height:100vh;
+    background-image:url("bg.png");
+    background-repeat:repeat;
+    overflow:hidden;
+    cursor:pointer;
+    font-family:Arial,sans-serif;
+}
+
+/* PAGE SYSTEM */
+.page{
+    position:absolute;
+    inset:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    opacity:0;
+    transform:translateY(25px);
+    transition:opacity 0.8s ease, transform 0.8s ease;
+    pointer-events:none;
+}
+
+.page.active{
+    opacity:1;
+    transform:translateY(0);
+    pointer-events:auto;
+}
+
+/* CARD */
+.card{
+    background:rgba(255,255,255,0.93);
+    padding:30px;
+    border-radius:22px;
+    width:90%;
+    max-width:460px;
+    text-align:center;
+}
+
+/* PAGE 1 */
+h1{
+    margin-bottom:25px;
+}
+
+.buttons{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+}
+
+button{
+    padding:12px 26px;
+    font-size:18px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    outline:none;
+}
+
+#yes{
+    background:#ff4d6d;
+    color:white;
+}
+
+#no{
+    background:#555;
+    color:white;
+}
+
+/* HEART */
+.heart{
+    position:relative;
+    width:260px;
+    height:240px;
+    margin:18px auto 0;
+}
+
+.word{
+    position:absolute;
+    font-weight:900;
+    color:#ff4d6d;
+    font-size:14px;
+    white-space:nowrap;
+    transform:translate(-50%,-50%);
+}
+
+/* PAGE 2 PHOTO */
+.photo-box{
+    width:160px;
+    height:160px;
+    margin:0 auto 22px;
+    padding:6px;
+    border-radius:18px;
+    background:linear-gradient(135deg,#ff4d6d,#ff9ab5);
+}
+
+.photo-inner{
+    width:100%;
+    height:100%;
+    background:white;
+    border-radius:14px;
+    padding:5px;
+}
+
+.photo-inner img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border-radius:10px;
+}
+
+/* TEXT */
+p{
+    font-family:cursive;
+    font-weight:bold;
+    font-size:18px;
+    line-height:1.7;
+    color:#4a0022;
+    text-align:left;
+}
+
+/* PAGE 5 ENVELOPE */
+.envelope{
+    width:280px;
+    height:180px;
+    background:#fff1df;
+    border-radius:14px;
+    position:relative;
+    cursor:pointer;
+    box-shadow:0 10px 25px rgba(0,0,0,0.18);
+    overflow:hidden;
+    transition:all 0.9s ease;
+}
+
+.envelope::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+        linear-gradient(135deg, transparent 50%, #f2dcc6 50%),
+        linear-gradient(225deg, transparent 50%, #f2dcc6 50%);
+    background-size:50% 100%;
+    background-repeat:no-repeat;
+    transition:opacity 0.6s ease;
+}
+
+.envelope.open{
+    width:100%;
+    height:auto;
+    padding:30px;
+}
+
+.envelope.open::before{
+    opacity:0;
+}
+
+.letter{
+    display:none;
+}
+
+.envelope.open .letter{
+    display:block;
+}
+
+/* VIDEO */
+video{
+    width:100%;
+    border-radius:16px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- AUDIO -->
+<audio id="bgMusic" loop>
+    <source src="song.mp3" type="audio/mp3">
+</audio>
+
+<!-- PAGE 1 -->
+<div class="page active" id="p1">
+    <div class="card">
+        <h1>WILL U BE MY VALENTINE??!!!!! ❤️</h1>
+        <div class="buttons">
+            <button id="yes">YES</button>
+            <button id="no">NO</button>
+        </div>
+        <div class="heart" id="heart"></div>
+    </div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" id="p2">
+    <div class="card">
+        <div class="photo-box">
+            <div class="photo-inner">
+                <img src="photo.png">
+            </div>
+        </div>
+        <p>
+        I feel incredibly lucky because you chose me and that choice makes me feel special every single day
+        being loved by you gives my life warmth meaning and confidence and I carry that feeling proudly
+        knowing that someone like you picked me fills my heart with gratitude and quiet happiness
+        </p>
+    </div>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page" id="p3">
+    <div class="card">
+        <p>
+        Our relationship feels perfect in ways I never expected and every day proves that love grows stronger with trust
+        even through distance we stay connected and every conversation brings comfort and reassurance
+        the bond we share feels natural warm and deeply meaningful and it gives me peace knowing we chose each other
+        </p>
+    </div>
+</div>
+
+<!-- PAGE 4 -->
+<div class="page" id="p4">
+    <div class="card">
+        <p>
+        This distance is slowly coming to an end and the thought of being closer fills my heart with excitement
+        everything we have waited for is turning into something real and beautiful
+        I see a future with you that feels safe hopeful and full of shared moments
+        loving you has taught me patience belief and the strength of true connection
+        </p>
+    </div>
+</div>
+
+<!-- PAGE 5 -->
+<div class="page" id="p5">
+    <div class="card">
+        <div class="envelope" id="envelope">
+            <div class="letter">
+            This letter holds everything I struggle to say out loud
+            you make my days lighter and my heart calmer in ways I never expected
+            choosing you feels natural and right and opening this letter means opening my heart completely
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- PAGE 6 -->
+<div class="page" id="p6">
+    <div class="card">
+        <video controls>
+            <source src="valentine.mp4" type="video/mp4">
+        </video>
+    </div>
+</div>
+
+<script>
+/* PAGE NAV – smooth */
+let current = 1;
+let transitioning = false;
+
+document.addEventListener("click", () => {
+    if (transitioning || current >= 6) return;
+
+    transitioning = true;
+
+    document.getElementById("p" + current).classList.remove("active");
+    current++;
+
+    setTimeout(() => {
+        document.getElementById("p" + current).classList.add("active");
+        transitioning = false;
+    }, 800);
+});
+
+/* MUSIC */
+const music = document.getElementById("bgMusic");
+let musicStarted = false;
+
+document.addEventListener("click", () => {
+    if (!musicStarted) {
+        music.play();
+        musicStarted = true;
+    }
+});
+
+/* NO BUTTON */
+const noBtn = document.getElementById("no");
+noBtn.addEventListener("click",(e)=>{
+    e.stopPropagation();
+    noBtn.style.transform =
+        `translate(${Math.random()*120-60}px,${Math.random()*60-30}px)`;
+});
+
+/* HEART */
+const heart=document.getElementById("heart");
+const words=[];
+for(let i=0;i<60;i++){
+    const s=document.createElement("span");
+    s.className="word";
+    s.innerText="I love you";
+    heart.appendChild(s);
+    words.push({el:s,o:i/60});
+}
+let t=0;
+function animate(){
+    t+=0.0015;
+    words.forEach(w=>{
+        const a=(t+w.o)*Math.PI*2;
+        const x=16*Math.pow(Math.sin(a),3);
+        const y=13*Math.cos(a)-5*Math.cos(2*a)-2*Math.cos(3*a)-Math.cos(4*a);
+        w.el.style.left=130+x*7+"px";
+        w.el.style.top=120-y*7+"px";
+    });
+    requestAnimationFrame(animate);
+}
+animate();
+
+/* ENVELOPE */
+document.getElementById("envelope").addEventListener("click",(e)=>{
+    e.stopPropagation();
+    e.currentTarget.classList.toggle("open");
+});
+</script>
+
+</body>
+</html>
